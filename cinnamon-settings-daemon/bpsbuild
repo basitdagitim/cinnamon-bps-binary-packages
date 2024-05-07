@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+name="cinnamon-settings-daemon"
+version="6.0.0"
+description="The Cinnamon Settings daemon"
+source="https://github.com/linuxmint/cinnamon-settings-daemon/archive/refs/tags/${version}.tar.gz"
+depends="cinnamon-desktop,colord,dbus-glib,libcanberra,cups,libgnomekbd,libgudev,libnotify,librsvg,libwacom,nss,polkit,upower"
+builddepend="meson,ninja,xf86-input-wacom"
+group="cinnamon.base"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --buildtype=plain \
+        -Duse_smartcard=disabled
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

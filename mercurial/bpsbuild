@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+name="mercurial"
+version="6.7.2"
+description="A scalable distributed SCM tool"
+source="https://www.mercurial-scm.org/release/mercurial-$version.tar.gz"
+depends="python"
+builddepend="py3-build,py3-installer,py3-wheel,py3-setuptools,py3-docutils"
+group="dev.vcs"
+
+setup(){
+	echo ""
+	cp -prvf $PACKAGEDIR/mercurial.profile /tmp/bps/build/
+}
+
+build(){
+	cd $SOURCEDIR
+	python3 -m build -wn
+	make -C contrib/chg
+}
+
+package(){
+	cd $SOURCEDIR
+	python3 -m installer --destdir="$DESTDIR" dist/*.whl
+	make DESTDIR="$DESTDIR" PREFIX=/usr install
+    
+    mkdir -p $DESTDIR/usr/lib64/python3.11
+	mv $DESTDIR/usr/lib/* $DESTDIR/usr/lib64/
+	rm -rf $DESTDIR/usr/lib
+	
+	install -Dm644 contrib/zsh_completion "$pkgdir/usr/share/zsh/site-functions/_hg"
+  	install -Dm644 contrib/bash_completion "$pkgdir/usr/share/bash-completion/completions/hg"
+
+	make -C contrib/chg DESTDIR="$DESTDIR" PREFIX=/usr install
+
+	install -Dm755 contrib/hg-ssh "$DESTDIR/usr/bin"
+	install -Dm755 contrib/hgk "$DESTDIR/usr/bin"
+
+	install -Dm644 -t "$DESTDIR/usr/share/emacs/site-lisp/" contrib/{mq.el,mercurial.el}
+
+	install -Dm644 -t "$DESTDIR/usr/share/vim/vimfiles/syntax/" contrib/vim/HGAnnotate.vim
+
+	# set some variables
+	install -Dm644 "../mercurial.profile" "$DESTDIR/etc/profile.d/mercurial.sh"
+
+	# FS#38825 - Add certs config to package
+	cat <<-EOF | install -Dm755 /dev/stdin "$DESTDIR/etc/mercurial/hgrc"
+		[web]
+		cacerts = /etc/ssl/certs/ca-certificates.crt
+		EOF
+
+
+
+
+}
+

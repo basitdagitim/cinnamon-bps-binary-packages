@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="cinnamon-desktop"
+version="6.0.0"
+description="Library with common API for various Cinnamon modules"
+source="https://github.com/linuxmint/cinnamon-desktop/archive/$version/cinnamon-desktop-$version.tar.gz"
+depends=""
+builddepend="libXinerama,libxkbfile"
+group="cinnamon.base"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ 
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

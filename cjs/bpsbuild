@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+name="cjs"
+version="6.0.0"
+description="Javascript Bindings for Cinnamon"
+source="https://github.com/linuxmint/cjs/archive/refs/tags/${version}.tar.gz"
+depends="mozjs102"
+group="gnome.extra"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --buildtype=plain \
+          -Dinstalled_tests=false
+
+}
+
+build(){
+    ninja -C build
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

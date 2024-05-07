@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="cinnamon-menus"
+version="6.0.0"
+description="Linux desktop which provides advanced innovative features and a traditional user experience"
+source="https://github.com/linuxmint/cinnamon-menus/archive/refs/tags/${version}.tar.gz"
+depends="glib"
+builddepend="gobject-introspection,meson"
+group="cinnamon.base"
+
+
+setup () {
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+ 		--libdir=/usr/lib64/ 
+}
+
+build () {
+    ninja -C build $jobs
+}
+
+package () {
+    DESTDIR=$DESTDIR DESTDIR=$DESTDIR ninja -C $BUILDDIR install $jobs
+}
+
