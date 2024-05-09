@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+name="json-c"
+version="0.17-20230812"
+description="A JSON implementation in C"
+source="https://github.com/json-c/json-c/archive/refs/tags/json-c-$version.tar.gz"
+depends=""
+builddepend=""
+group="dev.libs"
+
+
+setup(){
+	cd $SOURCEDIR
+    #mkdir build && cd build
+    
+    cmake -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib64 \
+		-DBUILD_SHARED_LIBS=ON \
+		-DBUILD_STATIC_LIBS=ON \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_SYSTEM_NAME=Linux \
+		-DCMAKE_HOST_SYSTEM_NAME=Linux
+}
+
+build(){
+    cmake --build build
+}
+
+package(){
+    DESTDIR=$DESTDIR cmake --install build
+}
+

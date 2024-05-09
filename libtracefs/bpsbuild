@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="libtracefs"
+version="1.7.0"
+description="Linux kernel trace file system library"
+source="https://git.kernel.org/pub/scm/libs/libtrace/libtracefs.git/snapshot/libtracefs-$version.tar.gz"
+depends="libtraceevent"
+depends=""
+group="net.libs"
+
+setup(){
+	cd $SOURCEDIR
+	meson setup $BUILDDIR --prefix=/usr \
+            --libdir=/usr/lib64/ \
+            -Db_lto=true
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+   DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

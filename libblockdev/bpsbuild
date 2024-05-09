@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+name="libblockdev"
+version="3.1.1"
+description="A library for manipulating block devices"
+source="https://github.com/storaged-project/libblockdev/releases/download/$version-1/libblockdev-$version.tar.gz"
+depends="gawk,parted,kmod,libyaml,btrfs-progs,dosfstools,gptfdisk,libbytesize,ndctl,xfsprogs,lvm2,volume_key,dmraid,libnvme"
+builddepend=""
+group="sys.libs"
+
+
+setup(){
+	#unset CFLAGS
+	#export CC=clang
+    
+    cd $SOURCEDIR
+    # FIXME: remove --without-xxx
+    ./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --without-fs
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+}
+
+aaa(){
+libcryptsetup
+devmapper
+blkid
+bytesize
+libndctl
+libnvme
+}

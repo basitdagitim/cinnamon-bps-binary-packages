@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="swig"
+version="4.1.1"
+description="Simplified Wrapper and Interface Generator"
+source="https://github.com/swig/swig/archive/refs/tags/v$version.tar.gz"
+depends=""
+builddepend=""
+group="dev.lang"
+
+setup(){
+	cd $SOURCEDIR
+	./autogen.sh
+	./configure --prefix=/usr \
+        --libdir=/usr/lib64/ 
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+}
+

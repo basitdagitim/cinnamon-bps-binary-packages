@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+name="gpgme"
+version="1.23.1"
+description="gnupg made easy"
+source="https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-$version.tar.bz2"
+depends="gnupg"
+builddepend=""
+group="app.crypt"
+
+
+setup(){
+	cd $SOURCEDIR
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --enable-languages="python cpp"
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+    
+    mkdir -p $DESTDIR/usr/lib64/python3.11
+	mv $DESTDIR/usr/lib/* $DESTDIR/usr/lib64/
+	rm -rf $DESTDIR/usr/lib 
+}
+

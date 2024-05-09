@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+name="libtraceevent"
+version="1.8.2"
+description="Linux kernel trace event library"
+source="https://git.kernel.org/pub/scm/libs/libtrace/libtraceevent.git/snapshot/libtraceevent-$version.tar.gz"
+depends=""
+group="dev.libs"
+
+setup(){
+	cd $SOURCEDIR
+	meson setup $BUILDDIR --prefix=/usr \
+            --libdir=/usr/lib64/ \
+            -Db_lto=true
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+   DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}

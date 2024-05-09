@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="chrpath"
+version="0.16"
+description="Chrpath can modify the rpath and runpath of ELF executables"
+source="https://deb.debian.org/debian/pool/main/c/chrpath/chrpath_$version.orig.tar.gz"
+depends=""
+depends=""
+group="app.admin"
+
+setup(){
+	cd $SOURCEDIR
+   ./configure --prefix=/usr \
+       --mandir=/usr/share/man
+}
+
+build(){
+    make
+}
+
+package(){
+    make DESTDIR=$DESTDIR docdir=/usr/share/doc/chrpath install
+
+}
+

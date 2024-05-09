@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+name="iniparser"
+version="4.1"
+description="A free stand-alone ini file parsing library"
+source="https://github.com/ndevilla/iniparser/archive/refs/tags/v$version.tar.gz"
+depends="chrpath"
+depends=""
+group="dev.libs"
+
+setup(){
+	echo ""
+}
+
+build(){
+	cd $SOURCEDIR
+    make
+}
+
+package(){
+  install -Dm0644 src/iniparser.h "${DESTDIR}"/usr/include/iniparser.h
+  install -Dm0644 src/dictionary.h "${DESTDIR}"/usr/include/dictionary.h
+  install -Dm0644 libiniparser.so.1 "$DESTDIR"/usr/lib/libiniparser.so.1
+  ln -sf libiniparser.so.1 "${DESTDIR}"/usr/lib/libiniparser.so
+  chrpath -d "${DESTDIR}"/usr/lib/libiniparser.so
+
+}
+

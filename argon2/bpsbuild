@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+name="argon2"
+version="20190702"
+description="The password hash Argon2, winner of PHC"
+source="https://github.com/P-H-C/phc-winner-argon2/archive/refs/tags/$version.tar.gz"
+depends=""
+builddepend=""
+group="app.crypt"
+
+setup(){
+	echo ""
+}
+
+build(){
+	cd $SOURCEDIR
+    make ARGON2_VERSION="${version}" OPTTARGET='none' LIBRARY_REL='lib64'
+}
+
+package(){
+   make ARGON2_VERSION="${version}" OPTTARGET='none' LIBRARY_REL='lib64' DESTDIR="$DESTDIR" install
+}
+

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+name="cryptsetup"
+version="2.6.1"
+description="Tool to setup encrypted devices with dm-crypt"
+source="https://gitlab.com/cryptsetup/cryptsetup/-/archive/v$version/cryptsetup-v$version.tar.gz"
+depends="lvm2,json-c,argon2"
+builddepend=""
+group="sys.fs"
+
+setup(){
+	cd $SOURCEDIR
+	autoreconf -fvi
+	./configure --prefix=/usr \
+		--libdir=/usr/lib64/ \
+		--disable-asciidoc \
+		--enable-libargon2 \
+		--disable-ssh-token \
+		--disable-static \
+		--disable-blkid \
+		--with-crypto_backend=openssl \
+		--disable-external-tokens
+
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+}
+
