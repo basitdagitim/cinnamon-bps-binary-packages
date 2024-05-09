@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+name="cinnamon"
+version="6.0.4"
+description="Linux desktop which provides advanced innovative features and a traditional user experience"
+source="https://github.com/linuxmint/cinnamon/archive/refs/tags/$version.tar.gz"
+depends="nm-applet,accountsservice,cinnamon-control-center,cinnamon-menus,cinnamon-session,cinnamon-settings-daemon,cjs,gnome-backgrounds,gsound,gstreamer,libcroco,libgnomekbd,libkeybinder3,librsvg,muffin,nemo polkit-gnome,py3-cairo,py3-dbus,py3-pygobject,py3-pam,py3-pexpect,py3-pillow,py3-inotify,py3-tz,py3-tinycss2,py3-xapp,py3-requests,timezonemap,xapp,xdg-desktop-portal-xapp,caribou"
+builddepend=""
+group="cinnamon.base"
+
+
+
+setup(){
+sed -i 's/mintinstall.desktop/org.gnome.Software.desktop/' data/org.cinnamon.gschema.xml
+
+  # Add polkit agent to required components
+  sed -i 's/RequiredComponents=\(.*\)$/RequiredComponents=\1polkit-gnome-authentication-agent-1;/' \
+      cinnamon*.session.in
+
+  # https://github.com/linuxmint/cinnamon/issues/3575#issuecomment-374887122
+  # Cinnamon has no upstream backgrounds, use GNOME backgrounds instead
+  sed -i 's|/usr/share/cinnamon-background-properties|/usr/share/gnome-background-properties|' \
+      files/usr/share/cinnamon/cinnamon-settings/modules/cs_backgrounds.py
+
+
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --libexecdir=lib/cinnamon
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+    # remove broken symlink
+    #rm -f $DESTDIR/etc/xdg/menus/cinnamon-applications-merged
+}
+

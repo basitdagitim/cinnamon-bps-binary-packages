@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="cinnamon-control-center"
+version="6.0.1"
+description="The Control Center for Cinnamon"
+source="https://github.com/linuxmint/cinnamon-control-center/archive/refs/tags/${version}.tar.gz"
+depends="cinnamon-settings-daemon,cinnamon-menus,colord,libgnomekbd"
+group="cinnamon.base"
+
+
+setup () {
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+     		--libdir=/usr/lib64/ \
+    		-Dmodemmanager=false \
+    		-Donlineaccounts=false
+}
+
+build () {
+    ninja -C $BUILDDIR
+}
+
+package () {
+     DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

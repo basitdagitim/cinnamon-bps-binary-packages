@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+name="cinnamon-translations"
+version="6.0.0"
+description="Translations for Cinnamon and Nemo"
+source="https://github.com/linuxmint/cinnamon-translations/archive/refs/tags/${version}.tar.gz"
+depends=""
+builddepend=""
+group=(cinnamon.extra)
+
+setup (){
+	echo ""
+}
+
+build(){
+	cd $SOURCEDIR
+    make
+}
+
+package(){
+    cp -r usr/ "${DESTDIR}"
+}
+
