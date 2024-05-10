@@ -4,7 +4,7 @@ version="4.1"
 description="A free stand-alone ini file parsing library"
 source="https://github.com/ndevilla/iniparser/archive/refs/tags/v$version.tar.gz"
 depends="chrpath"
-depends=""
+builddepend=""
 group="dev.libs"
 
 setup(){

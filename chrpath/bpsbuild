@@ -4,7 +4,7 @@ version="0.16"
 description="Chrpath can modify the rpath and runpath of ELF executables"
 source="https://deb.debian.org/debian/pool/main/c/chrpath/chrpath_$version.orig.tar.gz"
 depends=""
-depends=""
+builddepend=""
 group="app.admin"
 
 setup(){
