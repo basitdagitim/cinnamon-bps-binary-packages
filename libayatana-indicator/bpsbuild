@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="libayatana-indicator"
+version="0.9.3"
+description="Ayatana Application Indicators"
+source="https://github.com/AyatanaIndicators/libayatana-indicator/archive/refs/tags/$version.tar.gz"
+depends="libayatana-ido"
+builddepend=""
+group="deb.libs"
+
+
+setup(){
+	cd $SOURCEDIR
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib64
+}
+
+build(){
+    cmake --build build
+}
+
+package(){
+    DESTDIR=$DESTDIR cmake --install build
+}

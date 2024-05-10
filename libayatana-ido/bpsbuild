@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="libayatana-ido"
+version="0.9.3"
+description="Ayatana Application Indicators"
+source="https://github.com/AyatanaIndicators/ayatana-ido/archive/refs/tags/$version.tar.gz"
+depends="gtk3"
+builddepend=""
+group="dev.libs"
+
+setup(){
+	cd $SOURCEDIR
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib64 \
+        -DENABLE_TESTS=OFF
+
+}
+
+build(){
+    cmake --build build
+}
+
+package(){
+    DESTDIR=$DESTDIR cmake --install build
+}

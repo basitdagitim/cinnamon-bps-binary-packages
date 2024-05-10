@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+name="nm-applet"
+version="1.32.0"
+description="Network manager applet"
+source="https://gitlab.gnome.org/GNOME/network-manager-applet/-/archive/$version/network-manager-applet-$version.tar.gz"
+depends="libsecret,gtk3,networkmanager,libnma,libayatana-appindicator"
+builddepend=""
+group="gnome.extra"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        -Dselinux=false \
+        --libdir=/usr/lib64/ \
+        -Dwwan=false
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+

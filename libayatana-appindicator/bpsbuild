@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+name="libayatana-appindicator"
+version="0.5.92"
+description="Ayatana Application Indicators Shared Library"
+source="https://github.com/AyatanaIndicators/libayatana-appindicator/archive/refs/tags/$version.tar.gz"
+depends="gtk3,libayatana-indicator,libdbusmenu"
+builddepend=""
+group="dev.libs"
+
+
+setup(){
+	cd $SOURCEDIR
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib64 \
+        -DENABLE_BINDINGS_MONO=OFF
+}
+
+build(){
+    cmake --build build
+}
+
+package(){
+    DESTDIR=$DESTDIR cmake --install build
+}
+
