@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+name="libabigail"
+version="2.4"
+description="ABI Generic Analysis and Instrumentation Library"
+source="https://mirrors.kernel.org/sourceware/libabigail/libabigail-$version.tar.xz"
+depends="elfutils,libtool,libxml2"
+builddepend="py3-sphnix"
+group="dev.util"
+
+
+setup(){
+	cd $SOURCEDIR
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --enable-bash-completion \
+		--disable-manual \
+		--disable-apidoc \
+		--disable-static
+
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+    
+    cd bash-completion
+    for filename in abicompat abidiff abidw abilint abipkgdiff; do
+    	install -vDm644 -t "$DESTDIR/usr/share/bash-completion/completions" "$filename"
+  	done
+
+}
+

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+name="libcdio"
+version="2.1.0"
+description="GNU Compact Disc Input and Control Library"
+source="https://ftp.gnu.org/gnu/libcdio/libcdio-${version}.tar.bz2"
+depends=""
+builddepend=""
+group="dev.libs"
+
+setup () {
+	cd $SOURCEDIR
+    ./configure --prefix=/usr \
+		--libdir=/usr/lib64/
+}
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR="$DESTDIR" install
+}
+

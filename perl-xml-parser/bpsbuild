@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+name="perl-xml-parser"
+version="2.46"
+url="https://metacpan.org/pod/XML::Parser"
+description="A perl module for parsing XML documents"
+source="https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-$version.tar.gz"
+depends="perl,expat"
+group="dev.perl"
+
+setup(){
+cd $SOURCEDIR
+    PERL_MM_USE_DEFAULT=1 perl -I. Makefile.PL INSTALLDIRS=vendor
+}
+
+build(){
+    make $jobs
+}
+
+package(){
+    make install DESTDIR="$DESTDIR" $jobs
+    find "$DESTDIR" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

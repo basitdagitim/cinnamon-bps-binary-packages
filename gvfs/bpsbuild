@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+name="gvfs"
+version="1.52.0"
+description="Virtual filesystem implementation for GIO"
+source="https://gitlab.gnome.org/GNOME/gvfs/-/archive/${version}/gvfs-${version}.tar.gz"
+depends="udisks2,libcdio-paranoia,gcr,libsoup3"
+builddepend=""
+group="gnome.base"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ \
+		-Dfuse=false        \
+		-Dgphoto2=false     \
+		-Dafc=false         \
+		-Dbluray=false      \
+		-Dnfs=false         \
+		-Dmtp=false         \
+		-Dsmb=false         \
+		-Dtmpfilesdir=no    \
+		-Ddnssd=false       \
+		-Dgoa=false         \
+		-Dgoogle=false      \
+		-Dsystemduserunitdir=no
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+
