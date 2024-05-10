@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+name="btrfs-progs"
+version="6.6.2"
+description="A library for manipulating block devices"
+source="https://github.com/kdave/btrfs-progs/archive/refs/tags/v${version}.tar.gz"
+depends="e2fsprogs,zlib,libgcrypt,eudev"
+group="sys.fs"
+
+install=btrfs-progs.install
+options=(!staticlibs)
+
+
+setup(){
+	cd $SOURCEDIR
+	./autogen.sh
+	./configure --prefix=/usr \
+        --libdir=/usr/lib64/  \
+        --with-crypto=libgcrypt \
+        --disable-zstd \
+        --disable-documentation
+}
+
+build(){
+    make
+}
+
+package(){
+  make DESTDIR="$DESTDIR" install install_python
+  # install bash completion (FS#44618)
+  install -Dm644 btrfs-completion "$DESTDIR/usr/share/bash-completion/completions/btrfs"
+}
+

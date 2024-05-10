@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+name="xfsprogs"
+version="6.5.0"
+description="XFS filesystem utilities"
+source="https://mirrors.edge.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${version}.tar.xz"
+depends="inih,liburcu"
+builddepend=""
+group="sys.fs"
+
+setup(){
+    cd $SOURCEDIR
+    make configure
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --sbindir=/usr/sbin
+
+}
+
+build(){
+    make
+}
+
+package(){
+   # make install DESTDIR=$DESTDIR
+  make DIST_ROOT="${DESTDIR}" PKG_ROOT_SBIN_DIR="/usr/sbin" install install-dev
+  # add hack as we cannot set rootlibdir
+  mv "${DESTDIR}"/lib64/libhandle.so* "${DESTDIR}/usr/lib64/"
+  rm -rf "${DESTDIR}/lib64"
+
+}
+

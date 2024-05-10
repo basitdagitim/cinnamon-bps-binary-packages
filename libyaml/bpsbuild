@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="libyaml"
+version="0.2.5"
+description="YAML 1.1 library"
+source="https://github.com/yaml/libyaml/releases/download/${version}/yaml-${version}.tar.gz"
+depends=""
+builddepend=""
+group="dev.libs"
+
+cd "yaml"-$version
+
+setup(){
+	cd $SOURCEDIR
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/
+}
+
+build(){
+    make
+}
+
+package(){
+    make DESTDIR=$DESTDIR install
+}
+

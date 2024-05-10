@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="inih"
+version="56"
+description="inih (INI not invented here) simple .INI file parser"
+source="https://github.com/benhoyt/inih/archive/refs/tags/r$version.tar.gz"
+depends=""
+builddepend=""
+group="dev.libs"
+
+
+setup(){
+	cd $SOURCEDIR
+	meson setup $BUILDDIR --prefix=/usr \
+        --libdir=/usr/lib64/ 
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+   DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}
+
