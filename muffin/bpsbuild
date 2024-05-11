@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+name="muffin"
+version="6.0.0"
+description="Cinnamon window manager based on Mutter"
+source="https://github.com/linuxmint/muffin/archive/refs/tags/${version}.tar.gz"
+depends="cinnamon-desktop,gobject-introspection,libcanberra,libinput,libSM,libxkbcommon,startup-notification,zenity,graphene,pipewire,xorg-xwayland"
+builddepend=""
+group="cinnamon.base"
+
+
+setup(){
+	cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr
+}
+
+build(){
+    ninja -C $BUILDDIR
+}
+
+package(){
+    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+}

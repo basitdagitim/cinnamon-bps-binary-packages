@@ -3,7 +3,7 @@ name="cjs"
 version="6.0.0"
 description="Javascript Bindings for Cinnamon"
 source="https://github.com/linuxmint/cjs/archive/refs/tags/${version}.tar.gz"
-depends="mozjs102"
+depends="mozjs103"
 group="gnome.extra"
 
 
@@ -17,7 +17,7 @@ setup(){
 }
 
 build(){
-    ninja -C build
+    ninja -C $BUILDDIR
 }
 
 package(){
