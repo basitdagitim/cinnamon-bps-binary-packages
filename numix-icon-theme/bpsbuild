@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="numix-icon-theme"
+version="23.01.12"
+description="Official icon theme from the Numix project"
+source="https://github.com/numixproject/numix-icon-theme/archive/$version/numix-icon-theme-$version.tar.gz"
+depends=""
+builddepend=""
+group="x11.themes"
+
+setup() {
+	echo ""
+}
+
+build() {
+	echo ""
+}
+
+package() {
+	cd $SOURCEDIR
+  	mkdir -p "$DESTDIR"/usr/share/icons
+	mv Numix "$DESTDIR"/usr/share/icons/
+	
+	mkdir -p "$DESTDIR"/usr/share/icons
+	mv Numix-Light "$DESTDIR"/usr/share/icons/
+}

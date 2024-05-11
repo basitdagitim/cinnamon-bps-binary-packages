@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+name="papirus-icon-theme"
+version="20231201"
+description="papirus icon theme"
+source="https://github.com/PapirusDevelopmentTeam/$name/archive/$version/$name-$version.tar.gz"
+depends=""
+builddepend=""
+group="x11.themes"
+
+setup() {
+	echo ""
+}
+
+build() {
+	echo ""
+}
+
+package() {
+	cd $SOURCEDIR
+  make SHELL="/bin/bash -x" DESTDIR="$DESTDIR" install
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+name="gnome-icon-theme"
+version="3.12.0"
+description="GNOME standard icons"
+source="https://salsa.debian.org/gnome-team/gnome-icon-theme/-/archive/debian/$version-4/gnome-icon-theme-debian-$version-4.tar.gz"
+depends="hicolor-icon-theme,librsvg"
+builddepend=""
+group="x11.themes"
+
+setup() {
+	cd $SOURCEDIR
+	./configure --prefix=/usr \
+        --disable-icon-mapping
+
+}
+
+build() {
+	make
+}
+
+package() {
+  make DESTDIR="$DESTDIR" install
+}
