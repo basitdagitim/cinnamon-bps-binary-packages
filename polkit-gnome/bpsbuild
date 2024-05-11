@@ -7,7 +7,7 @@ description="PolicyKit integration for the GNOME desktop"
 source="https://download.gnome.org/sources/polkit-gnome/${version}/polkit-gnome-${version}.tar.xz"
 
 depends="gtk3,polkit"
-makedepends="intltool"
+makedepend="intltool"
 group="gnome.extra"
 
 setup(){
