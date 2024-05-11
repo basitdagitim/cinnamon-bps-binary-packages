@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="gnome-screenshot"
+version="41.0"
+url="https://gitlab.gnome.org/GNOME/gnome-screenshot"
+description="GNOME Screenshot is a small utility that takes a screenshot of the whole desktop; the currently focused window; or an area of the screen."
+
+source="https://gitlab.gnome.org/GNOME/gnome-screenshot/-/archive/9f067cf428b6bac78ffac31c1a17a20fb2c24843/gnome-screenshot-9f067cf428b6bac78ffac31c1a17a20fb2c24843.tar.gz"
+depends="libhandy"
+group="media.gfx"
+
+setup(){
+cd $SOURCEDIR
+		meson setup $BUILDDIR  --prefix=/usr \
+				--libdir=/usr/lib64/
+}
+
+build(){
+		ninja -C $BUILDDIR $jobs
+}
+
+package(){
+   DESTDIR=$DESTDIR  ninja -C $BUILDDIR install $jobs
+}
+

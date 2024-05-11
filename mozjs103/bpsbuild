@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+name="mozjs103"
+version="103.0"
+description="JavaScript interpreter and libraries - Version 102"
+#source="https://salsa.debian.org/gnome-team/mozjs/-/archive/upstream/${version}/mozjs-upstream-${version}.tar.gz"
+source="https://ftp.mozilla.org/pub/firefox/releases/${version}/source/firefox-${version}.source.tar.xz"
+depends="icu,libffi,nspr"
+builddepend="clang,linux-headers,llvm,m4,perl,python,rust,sed,zlib"
+group="gnome.extra"
+
+setup(){
+
+export MOZCONFIG=mozconfig
+unset CARGO_PROFILE_RELEASE_OPT_LEVEL
+unset CARGO_PROFILE_RELEASE_LTO
+export CC=clang
+export CXX=clang++
+export CFLAGS="$CFLAGS -O2"
+export CXXFLAGS="$CXXFLAGS -O2"
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
+export MOZBUILD_STATE_PATH="$HOME/mozbuild"
+export MOZ_NOSPAM=1
+export PYTHON=/usr/bin/python3
+export RUST_TARGET="x86_64"
+export SHELL=/bin/ash
+
+	cp -prvf $PACKAGEDIR/mozconfig $SOURCEDIR/
+	cd $SOURCEDIR
+    #echo "ac_add_options --prefix=/usr" >> .mozconfig
+}
+
+build(){
+    ./mach build
+}
+
+package(){
+  	#cd obj-opt
+	make DESTDIR="$DESTDIR" install
+	rm -f "$DESTDIR"/usr/lib/*.ajs
+}

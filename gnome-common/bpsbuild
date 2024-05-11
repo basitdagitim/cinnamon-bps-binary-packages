@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="gnome-common"
+version="3.18.0"
+url="https://gitlab.gnome.org/GNOME/gnome-common.git/"
+description="Common files for development of Gnome packages"	
+
+source="https://gitlab.gnome.org/GNOME/gnome-common/-/archive/3.18.0/gnome-common-3.18.0.tar.gz"
+depends=""
+group="gnome.base"
+
+setup(){
+cd $SOURCEDIR
+	./autogen.sh
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/
+}
+
+build(){
+    make $jobs
+}
+
+package(){
+    make install DESTDIR=$DESTDIR $jobs
+}
+

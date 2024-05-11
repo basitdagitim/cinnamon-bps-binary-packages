@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+name="yelp-xsl"
+version="42.1"
+url="https://gitlab.gnome.org/GNOME/yelp-xsl"
+description="XSL stylesheets for yelp"
+
+source="https://gitlab.gnome.org/GNOME/yelp-xsl/-/archive/$version/yelp-xsl-$version.tar.gz"
+depends="libxslt"
+builddepend=""
+
+group="gnome.extra"
+
+setup(){
+cd $SOURCEDIR
+   #./autoreconf -fvi
+   autoreconf --force --install --verbose
+	./configure --prefix=/usr \
+        --libdir=/usr/lib64/ 
+}
+
+build(){
+    make $jobs
+}
+
+package(){
+    make install DESTDIR=$DESTDIR $jobs
+}
+

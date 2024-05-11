@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+name="gnome-backgrounds"
+version="45.0"	
+url="https://gitlab.gnome.org/GNOME/gnome-backgrounds"
+description="Default wallpaper set for GNOME"
+source="https://download.gnome.org/sources/gnome-backgrounds/${version%.*}/gnome-backgrounds-${version}.tar.xz"
+depends=""
+group="x11.themes"
+
+setup(){
+cd $SOURCEDIR
+    meson setup $BUILDDIR --prefix=/usr \
+    	--libdir=/usr/lib64/ \
+    	-Ddefault_library=both
+}
+
+build(){
+    ninja -C  $BUILDDIR $jobs
+}
+
+package(){
+  DESTDIR=$DESTDIR  ninja -C  $BUILDDIR install $jobs
+}
+
+

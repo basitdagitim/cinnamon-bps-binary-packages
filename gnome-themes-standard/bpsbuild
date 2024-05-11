@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+name="gnome-themes-standard"
+version="3.28"
+url="https://gitlab.gnome.org/GNOME/gnome-themes-extra"
+description="Standard Themes for GNOME Applications"
+
+source="https://gitlab.gnome.org/GNOME/gnome-themes-extra/-/archive/3.28/gnome-themes-extra-3.28.tar.gz"
+depends="gtk3,intltool"
+
+group="x11.themes"
+
+setup(){
+cd $SOURCEDIR
+    autoreconf -fvi
+    ./configure --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        --disable-gtk2-engine
+}
+
+build(){
+    make $jobs
+}
+
+package(){
+    make install DESTDIR=$DESTDIR $jobs
+}
+
