@@ -15,8 +15,13 @@ setup(){
     cd $SOURCEDIR
     # FIXME: remove --without-xxx
     ./configure --prefix=/usr \
+    	--libdir=/usr/lib64/ \
         --sysconfdir=/etc \
-        --without-fs
+        --with-fs \
+		--with-part \
+		--with-python3 \
+		--without-mpath \
+		--without-nvdimm
 }
 
 build(){
@@ -24,14 +29,6 @@ build(){
 }
 
 package(){
-    make install DESTDIR=$DESTDIR
+    make DESTDIR=$DESTDIR install
 }
 
-aaa(){
-libcryptsetup
-devmapper
-blkid
-bytesize
-libndctl
-libnvme
-}
