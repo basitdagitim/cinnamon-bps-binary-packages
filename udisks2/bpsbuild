@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+name="udisks2"
+version="2.10.1"
+description="Disk Management Service, version 2"
+source="https://github.com/storaged-project/udisks/archive/refs/tags/udisks-$version.tar.gz"
+depends=""
+builddepend="acl,gobject-introspection,lvm2,libblockdev,libatasmart,libgudev,polkit"
+group="sys.fs"
+
+
+setup(){
+	cp -prvf $PACKAGEDIR/udisks.initd /tmp/bps/build/
+	cd $SOURCEDIR
+    autoreconf -fvi
+    ./configure --prefix=/usr \
+    	--sbindir=/usr/bin \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --libdir=/usr/lib64/ \
+        --libexecdir=/usr/lib64 \
+        --with-systemdsystemunitdir=no \
+        --enable-avaible-modules \
+        --enable-lvm2 \
+        --enable-lvmcache \
+        --enable-btrfs \
+        --disable-iscsi \
+        --disable-zram \
+        --disable-static \
+        --with-udevdir=/usr/lib64/udev \
+        --disable-gtk-doc
+}
+
+build(){
+    make
+}
+
+package(){
+    make install DESTDIR=$DESTDIR
+    # openrc service
+    mkdir -p $DESTDIR/etc/init.d
+    install ../udisks.initd $DESTDIR/etc/init.d/udisks
+}
+
