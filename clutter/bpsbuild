@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+name="clutter"
+version="1.26.4"
+description="A toolkit for creating fast, portable, compelling dynamic UIs"
+source="https://download.gnome.org/sources/clutter/${version%.*}/clutter-${version}.tar.xz"
+depends="gtk3,libinput,cogl"
+builddepend=""
+group="media.libs"
+
+
+setup () {
+	cd $SOURCEDIR
+	NOCONFIGURE=1 ./autogen.sh
+    ./configure --prefix=/usr \
+		--libdir=/usr/lib64/ \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--with-x \
+		--enable-gdk-backend \
+		--enable-egl-backend \
+		--enable-wayland-backend \
+		--enable-x11-backend \
+		--enable-evdev-input
+}
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR="$DESTDIR" install $jobs
+}
+

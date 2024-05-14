@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+name="caribou"
+version="0.4.21"
+description="A text entry and UI navigation application (on-screen keyboard)"
+#source="https://download.gnome.org/sources/caribou/${version%.*}/caribou-${version}.tar.xz"
+source="https://gitlab.gnome.org/Archive/caribou/-/archive/${version}/caribou-${version}.tar.gz"
+depends="at-spi2-core,py3-pygobject,gtk3,libxklavier,libgee,dconf,clutter"
+builddepend="intltool,docbook-xsl,gobject-introspection,vala,git,gnome-common"
+group="app.accessibility"
+
+
+setup () {
+	cp -prvf $PACKAGEDIR/files/ /tmp/bps/build/
+	cd $SOURCEDIR
+	patch -Np1 -i ../files/3.patch
+  	patch -Np1 -i ../files/unicode_to_keyval-symbol-check.patch
+
+	NOCONFIGURE=1 ./autogen.sh
+    ./configure --prefix=/usr \
+		--libdir=/usr/lib64/ \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--libexecdir=/usr/lib64 \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-gtk2-module \
+		--disable-static \
+	    --disable-schemas-compile
+
+}
+
+build () {
+	sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make
+}
+
+package () {
+    make DESTDIR="$DESTDIR" install
+}
+

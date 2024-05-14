@@ -3,7 +3,8 @@ name="cjs"
 version="6.0.0"
 description="Javascript Bindings for Cinnamon"
 source="https://github.com/linuxmint/cjs/archive/refs/tags/${version}.tar.gz"
-depends="mozjs103"
+depends="mozjs102"
+builddepend="libiconv"
 group="gnome.extra"
 
 
@@ -11,16 +12,18 @@ setup(){
 	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
         --libdir=/usr/lib64/ \
+        --libexecdir=/usr/lib64 \
         --buildtype=plain \
-          -Dinstalled_tests=false
+        -Dinstalled_tests=false \
+        -Ddtrace=false
 
 }
 
 build(){
-    ninja -C $BUILDDIR
+    meson compile -C $BUILDDIR
 }
 
 package(){
-    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+    DESTDIR="$DESTDIR" meson install -C $BUILDDIR
 }
 

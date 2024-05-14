@@ -14,11 +14,11 @@ setup () {
  		--libdir=/usr/lib64/ 
 }
 
-build () {
-    ninja -C build $jobs
+build(){
+    meson compile -C $BUILDDIR
 }
 
-package () {
-    DESTDIR=$DESTDIR DESTDIR=$DESTDIR ninja -C $BUILDDIR install $jobs
+package(){
+    DESTDIR="$DESTDIR" meson install -C $BUILDDIR
 }
 

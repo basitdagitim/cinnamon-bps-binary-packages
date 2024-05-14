@@ -12,15 +12,16 @@ setup(){
 	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
         --libdir=/usr/lib64/ \
+        --libexecdir=/usr/lib64/cinnamon-settings-daemon-6.0.0 \
         --buildtype=plain \
         -Duse_smartcard=disabled
 }
 
 build(){
-    ninja -C $BUILDDIR
+    meson compile -C $BUILDDIR
 }
 
 package(){
-    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+    DESTDIR="$DESTDIR" meson install -C $BUILDDIR
 }
 

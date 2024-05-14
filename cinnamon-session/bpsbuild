@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="cinnamon-session"
-version="6.0.0"
+version="6.0.4"
 description="The Cinnamon Session Handler"
 source="https://github.com/linuxmint/cinnamon-session/archive/refs/tags/${version}.tar.gz"
 depends="cinnamon-desktop,libSM,libcanberra,xapp,libXtst"
@@ -11,15 +11,14 @@ group="cinnamon.base"
 setup () {
 	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
- 		--libexecdir=lib64/${name} \
+ 		--libexecdir=/usr/lib64/${name} \
 		--buildtype=plain
 }
 
-build () {
-    ninja -C build
+build(){
+    meson compile -C $BUILDDIR
 }
 
-package () {
-    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+package(){
+    DESTDIR="$DESTDIR" meson install -C $BUILDDIR
 }
-

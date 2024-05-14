@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+name="cogl"
+version="1.22.8"
+description="An object oriented GL/GLES Abstraction/Utility Layer"
+source="https://download.gnome.org/sources/cogl/1.22/cogl-$version.tar.xz"
+depends="mesa,libdrm,libXext,libXdamage,libXcomposite,gdk-pixbuf,pango,libXrandr"
+builddepend="gobject-introspection,git,gtk-doc"
+group="media.libs"
+
+
+setup () {
+	cd $SOURCEDIR
+#	autoreconf -fvi
+    ./configure --prefix=/usr \
+		--libdir=/usr/lib64/ \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--disable-debug \
+		--enable-gles2 \
+		--enable-gl \
+		--enable-gdk-pixbuf \
+		--enable-introspection \
+		--enable-cairo \
+		--enable-gtk-doc=no \
+		--enable-gtk-doc-html=no \
+		--enable-gtk-doc-pdf=no \
+		--enable-wayland-egl-platform \
+		--enable-wayland-egl-server \
+		--disable-dependency-tracking
+}
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR="$DESTDIR" install $jobs
+}
+

@@ -3,22 +3,25 @@ name="cinnamon-desktop"
 version="6.0.0"
 description="Library with common API for various Cinnamon modules"
 source="https://github.com/linuxmint/cinnamon-desktop/archive/$version/cinnamon-desktop-$version.tar.gz"
-depends=""
-builddepend="libXinerama,libxkbfile"
+depends="accountsservice,gtk3,libxkbfile,libpulse"
+builddepend="meson,gobject-introspection,intltool"
 group="cinnamon.base"
 
 
 setup(){
+	cp -prvf $PACKAGEDIR/config.patch /tmp/bps/build/
 	cd $SOURCEDIR
+	patch -p1 < ../config.patch
+	
     meson setup $BUILDDIR --prefix=/usr \
         --libdir=/usr/lib64/ 
 }
 
 build(){
-    ninja -C $BUILDDIR
+    meson compile -C $BUILDDIR
 }
 
 package(){
-    DESTDIR=$DESTDIR ninja -C $BUILDDIR install
+    DESTDIR="$DESTDIR" meson install -C $BUILDDIR
 }
 

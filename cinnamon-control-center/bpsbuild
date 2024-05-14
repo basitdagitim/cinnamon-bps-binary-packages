@@ -4,6 +4,7 @@ version="6.0.1"
 description="The Control Center for Cinnamon"
 source="https://github.com/linuxmint/cinnamon-control-center/archive/refs/tags/${version}.tar.gz"
 depends="cinnamon-settings-daemon,cinnamon-menus,colord,libgnomekbd"
+builddepend="meson,ninja,xtrans"
 group="cinnamon.base"
 
 

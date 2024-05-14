@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="cinnamon-screensaver"
-version="6.0.0"
+version="6.0.3"
 description="Screensaver designed to integrate well with the Cinnamon desktop."
 source="https://github.com/linuxmint/cinnamon-screensaver/archive/refs/tags/${version}.tar.gz"
 depends="accountsservice,cinnamon-desktop,libgnomekbd,py3-cairo,py3-pygobject,py3-setproctitle,py3-xapp,xapp,xdotool,procps-ng"
@@ -12,6 +12,7 @@ setup () {
 	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
     	--libdir=/usr/lib64/ \
+    	--libexecdir=/usr/lib64/cinnamon-screensaver \
     	-Ddefault_library=both 
 		#-Dlocking=false #$name-$version
 }
