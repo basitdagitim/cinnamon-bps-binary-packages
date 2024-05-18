@@ -30,7 +30,7 @@ setup(){
 	cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
         --libdir=/usr/lib64/ \
-        --libexecdir=lib/cinnamon
+        --libexecdir=/usr/lib64/cinnamon
 }
 
 build(){
@@ -41,5 +41,9 @@ package(){
     DESTDIR=$DESTDIR ninja -C $BUILDDIR install
     # remove broken symlink
     #rm -f $DESTDIR/etc/xdg/menus/cinnamon-applications-merged
+    
+	mkdir -p $DESTDIR/usr/lib64/python3.11
+	mv $DESTDIR/usr/lib/* $DESTDIR/usr/lib64/
+	rm -rf $DESTDIR/usr/lib
 }
 
