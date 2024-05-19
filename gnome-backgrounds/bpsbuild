@@ -4,7 +4,7 @@ version="45.0"
 url="https://gitlab.gnome.org/GNOME/gnome-backgrounds"
 description="Default wallpaper set for GNOME"
 source="https://download.gnome.org/sources/gnome-backgrounds/${version%.*}/gnome-backgrounds-${version}.tar.xz"
-depends=""
+depends="glibc"
 group="x11.themes"
 
 setup(){

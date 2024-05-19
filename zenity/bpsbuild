@@ -5,7 +5,7 @@ url="https://wiki.gnome.org/Projects/Zenity"
 description="Display dialog boxes from the command line and shell scripts"
 source="https://download.gnome.org/sources/zenity/${version%.*}/zenity-${version}.tar.xz"
 depends="gtk3,libnotify"
-makedepends="meson,yelp-tools"
+makedepend="meson,yelp-tools"
 group="gnome.extra"
 
 setup(){
