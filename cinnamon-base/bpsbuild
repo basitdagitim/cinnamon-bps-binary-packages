@@ -15,6 +15,7 @@ build(){
 }
 
 package(){
+mkdir -p $DESTDIR/tmp/
 touch $DESTDIR/tmp/cinnamon-base
  
 }
