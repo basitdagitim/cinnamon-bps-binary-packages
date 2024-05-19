@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+name="cinnamon-base"
+version="1.0.0"
+description="X.Org cinnamon base packages "
+source=""
+depends="adwaita-icon-theme,argon2,btrfs-progs,caribou,chrpath,cinnamon,cinnamon-control-center,cinnamon-desktop,cinnamon-menus,cinnamon-screensaver,cinnamon-session,cinnamon-settings-daemon,cinnamon-translations,cjs,clutter,cogl,cryptsetup,dmraid,gnome-backgrounds,gnome-common,gnome-icon-theme,gnome-screenshot,gnome-themes-standard,gpgme,gvfs,inih,iniparser,json-c,libabigail,libaio,libatasmart,libayatana-appindicator,libayatana-ido,libayatana-indicator,libblockdev,libbytesize,libcdio,libcdio-paranoia,libnvme,libsoup2,libtraceevent,libtracefs,liburcu,libyaml,lvm2,mercurial,mozjs102,muffin,ndctl,nemo,nm-applet,perl-libwww,polkit-gnome,sane,swig,sysprof,timezonemap,udisks2,upower,volume_key,xfsprogs,yelp-tools,yelp-xsl,zenity"
+group="cinnamon.base"
+
+setup(){
+	echo ""
+}
+
+build(){
+   echo ""
+}
+
+package(){
+touch $DESTDIR/tmp/cinnamon-base
+ 
+}
+
