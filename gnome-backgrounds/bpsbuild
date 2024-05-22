@@ -6,7 +6,7 @@ description="Default wallpaper set for GNOME"
 source="https://download.gnome.org/sources/gnome-backgrounds/${version%.*}/gnome-backgrounds-${version}.tar.xz"
 depends="glibc"
 group="x11.themes"
-
+ 
 setup(){
 cd $SOURCEDIR
     meson setup $BUILDDIR --prefix=/usr \
