@@ -1,0 +1,4 @@
+#!/bin/sh
+#!/bin/sh
+sed -i "/XDG_SESSION_TYPE/d" /etc/skel/.xinitrc
+sed -i "/cinnamon-session-cinnamon/d" /etc/skel/.xinitrc

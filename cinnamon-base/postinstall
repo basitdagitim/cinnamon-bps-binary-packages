@@ -1,0 +1,9 @@
+#!/bin/sh
+sed -i "/XDG_SESSION_TYPE/d" /etc/skel/.xinitrc
+sed -i "/cinnamon-session-cinnamon/d" /etc/skel/.xinitrc
+
+echo -e "export XDG_SESSION_TYPE=x11">>/etc/skel/.xinitrc
+echo -e "exec cinnamon-session-cinnamon">>/etc/skel/.xinitrc
+
+
+
