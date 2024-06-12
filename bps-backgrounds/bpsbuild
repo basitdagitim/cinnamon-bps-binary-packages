@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+name="bps-backgrounds"
+version="1.0"
+url="https://gitlab.gnome.org/GNOME/gnome-backgrounds"
+description="Default wallpaper set for GNOME"
+source=""
+depends="glibc"
+group="x11.themes"
+setup(){
+echo ""
+   
+}
+
+build(){
+echo ""
+}
+
+package(){
+		cp -prfv $PACKAGEDIR/usr  ${DESTDIR}/
+}
+
+
