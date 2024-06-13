@@ -19,6 +19,9 @@ build(){
 
 package(){
   DESTDIR=$DESTDIR  ninja -C  $BUILDDIR install $jobs
+  rm -rf $DESTDIR/usr
+  cp -prfv $PACKAGEDIR/files/*  ${DESTDIR}/
+  
 }
 
 
