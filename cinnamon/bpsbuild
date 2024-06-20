@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 name="cinnamon"
-version="6.0.4"
+version="6.2.0"
 description="Linux desktop which provides advanced innovative features and a traditional user experience"
 source="https://github.com/linuxmint/cinnamon/archive/refs/tags/$version.tar.gz"
-depends="nm-applet,accountsservice,cinnamon-control-center,cinnamon-menus,cinnamon-session,cinnamon-settings-daemon,cjs,gnome-backgrounds,gsound,gstreamer,libcroco,libgnomekbd,libkeybinder3,librsvg,muffin,nemo,polkit-gnome,py3-cairo,py3-dbus,py3-pygobject,py3-pam,py3-pexpect,py3-pillow,py3-inotify,py3-tz,py3-tinycss2,py3-xapp,py3-requests,timezonemap,xapp,xdg-desktop-portal-xapp,caribou"
+depends="nm-applet,accountsservice,cinnamon-control-center,cinnamon-menus,cinnamon-session,cinnamon-settings-daemon,cjs,gnome-backgrounds,gsound,gstreamer,libcroco,libgnomekbd,libkeybinder3,librsvg,muffin,nemo polkit-gnome,py3-cairo,py3-dbus,py3-pygobject,py3-pam,py3-pexpect,py3-pillow,py3-inotify,py3-tz,py3-tinycss2,py3-xapp,py3-requests,timezonemap,xapp,xdg-desktop-portal-xapp,caribou"
 builddepend=""
 group="cinnamon.base"
 
 
 
 setup(){
+	cp -prvf $PACKAGEDIR/files/ /tmp/bps/build/
 	cd $SOURCEDIR
-	
-	cp -prvf $PACKAGEDIR/default-theme.patch /tmp/bps/build/
-	patch -p1 < ../default-theme.patch
+	patch -p1 < ../files/default-theme.patch
+	patch -p1 < ../files/set_wheel.diff
 	
 	sed -i 's/mintinstall.desktop/org.gnome.Software.desktop/' data/org.cinnamon.gschema.xml
 
@@ -23,8 +23,7 @@ setup(){
 
 	  # https://github.com/linuxmint/cinnamon/issues/3575#issuecomment-374887122
 	  # Cinnamon has no upstream backgrounds, use GNOME backgrounds instead
-	  sed -i 's|/usr/share/cinnamon-background-properties|/usr/share/gnome-background-properties|' \
-		  files/usr/share/cinnamon/cinnamon-settings/modules/cs_backgrounds.py
+	  sed -i 's|/usr/share/cinnamon-background-properties|/usr/share/gnome-background-properties|' files/usr/share/cinnamon/cinnamon-settings/modules/cs_backgrounds.py
 
 
 	cd $SOURCEDIR

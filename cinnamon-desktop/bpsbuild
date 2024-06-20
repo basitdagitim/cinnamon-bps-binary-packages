@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="cinnamon-desktop"
-version="6.0.0"
+version="6.2.0"
 description="Library with common API for various Cinnamon modules"
 source="https://github.com/linuxmint/cinnamon-desktop/archive/$version/cinnamon-desktop-$version.tar.gz"
 depends="accountsservice,gtk3,libxkbfile,libpulse"
@@ -14,7 +14,15 @@ setup(){
 	patch -p1 < ../config.patch
 	
     meson setup $BUILDDIR --prefix=/usr \
-        --libdir=/usr/lib64/ 
+        --libdir=/usr/lib64/ \
+        --libexecdir    lib \
+		--sbindir       bin \
+		--buildtype     plain \
+		--wrap-mode     nodownload \
+		-Dalsa=true \
+		-Db_lto=true \
+		-Db_pie=true \
+		-Dpython.bytecompile=1
 }
 
 build(){

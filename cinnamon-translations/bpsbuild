@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="cinnamon-translations"
-version="6.0.2"
+version="6.2.0"
 description="Translations for Cinnamon and Nemo"
 source="https://github.com/linuxmint/cinnamon-translations/archive/refs/tags/${version}.tar.gz"
 depends=""

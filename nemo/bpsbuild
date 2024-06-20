@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="nemo"
-version="6.0.2"
+version="6.2.0"
 description="File manager for the Cinnamon desktop environment"
 source="https://github.com/linuxmint/nemo/archive/refs/tags/${version}.tar.gz"
 depends="cinnamon-desktop,dconf,gvfs,libexif,libnotify,libxml2,python,xapp"

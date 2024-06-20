@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 name="cinnamon-screensaver"
-version="6.0.3"
+version="6.2.0"
 description="Screensaver designed to integrate well with the Cinnamon desktop."
 source="https://github.com/linuxmint/cinnamon-screensaver/archive/refs/tags/${version}.tar.gz"
 depends="accountsservice,cinnamon-desktop,libgnomekbd,py3-cairo,py3-pygobject,py3-setproctitle,py3-xapp,xapp,xdotool,procps-ng"
