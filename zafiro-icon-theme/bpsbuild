@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+name="zafiro-icon-theme"
+version="1.3"
+description="icon pack flat with light colors"
+source="https://github.com/zayronxio/Zafiro-icons/archive/$version.tar.gz"
+depends="hicolor-icon-theme"
+builddepend="meson"
+group="x11.themes"
+
+setup(){
+
+echo ""
+}
+build(){
+echo ""
+}
+
+package(){
+    cd $SOURCEDIR
+    mkdir -p "$DESTDIR"/usr/share/icons/zafiro-Dark
+    mkdir -p "$DESTDIR"/usr/share/icons/zafiro-Light
+	cp -a Dark "$DESTDIR"/usr/share/icons/zafiro-Dark/
+	cp -a Light "$DESTDIR"/usr/share/icons/zafiro-Light/
+}
